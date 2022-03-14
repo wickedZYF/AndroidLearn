@@ -1,29 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@mipmap/gaitubao_l_png"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:src="@mipmap/tou" />
     <TextView
-        android:id="@+id/tv_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center_horizontal"
+        android:text="资源分享☝☝☝开发者zyf" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Sign up"
+        android:textSize="30dp"
+        android:gravity="center_horizontal"/>
+
+
+
+
+    <EditText
+        android:id="@+id/name1"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:textSize="30sp"
-        android:text="@string/tv_one"
-        android:gravity="center_vertical"
-        android:textColor="@color/black"
-        android:shadowColor="@color/red"
-        android:singleLine="true"
-        android:ellipsize="marquee"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:focusableInTouchMode="true"
-        android:focusable="true"
-        android:shadowRadius="3.0"
-        android:shadowDx="10"
-        android:shadowDy="10"
-        android:textStyle="italic" >
-        <requestFocus/>
-    </TextView>
+        android:layout_height="wrap_content"
+        android:hint="UserName"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="70dp" />
+
+
+    <EditText
+        android:id="@+id/pwd1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="PassWord"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/zhuCe1"
+        android:layout_marginLeft="140dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="50dp"
+        android:layout_width="240dp"
+        android:layout_height="45dp"
+        android:background="#00000000"
+        android:textSize="12dp"
+        android:textColor="#FFFFFFFF"
+        android:text="没有账号？来注册吧" />
+    <Button
+        android:id="@+id/dengLu"
+        android:layout_width="240dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/shape"
+        android:textColor="@color/white"
+        android:text="Login"
+        android:onClick="login"/>
+
+
+    <ProgressBar
+        android:id="@+id/pro_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="30dp"
+        android:progressDrawable="@drawable/progress_bg"
+        android:visibility="invisible" />
 
 </LinearLayout>
