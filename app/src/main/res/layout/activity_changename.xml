@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/gaitubao_l_png"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".zhuCe">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="修改名称"
+        android:textSize="30dp"
+        android:gravity="center_horizontal"/>
+
+
+
+
+    <EditText
+        android:id="@+id/name3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入新名称"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="200dp" />
+
+
+
+
+    <Button
+        android:id="@+id/changename"
+        android:layout_width="240dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="130dp"
+        android:layout_marginRight="30dp"
+        android:textColor="@color/white"
+        android:background="@drawable/shape"
+        android:text="Change"
+       />
+
+</LinearLayout>
+
+

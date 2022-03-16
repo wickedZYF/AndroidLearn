@@ -29,7 +29,6 @@ public class shoujiemian extends AppCompatActivity {
         //找到xml中的ListView项
         ListView listView=findViewById(R.id.lv);
 
-
     }
 
 }

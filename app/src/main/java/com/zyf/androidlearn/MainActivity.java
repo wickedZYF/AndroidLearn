@@ -57,9 +57,23 @@ public class MainActivity extends AppCompatActivity {
                           e.printStackTrace();
                       }
 
+                      if (proBar.getProgress()==100) {
+
+                          Intent intent=new Intent();
+
+                          intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK); //登录后返回键失效
+
+                          intent.setClass(MainActivity.this,viewpager.class);
+
+                          startActivity(intent);
+
+                      }
+
                   }
               }
           }.start();
+
+
         }
 
     }

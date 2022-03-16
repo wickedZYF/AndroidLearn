@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoTitle">
-        <activity android:name=".function"></activity>
+        <activity android:name=".viewpager"></activity>
+        <activity android:name=".changepassword" />
+        <activity android:name=".changename" />
+        <activity android:name=".function" />
         <activity android:name=".shoujiemian" />
         <activity android:name=".zhuCe" />
         <activity android:name=".MainActivity">

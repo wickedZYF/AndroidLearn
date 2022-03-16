@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:gravity="center_horizontal"
+
         android:text="资源分享☝☝☝开发者zyf" />
     <TextView
         android:layout_width="wrap_content"
