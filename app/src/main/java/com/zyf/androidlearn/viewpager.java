@@ -24,6 +24,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.zyf.androidlearn.Bean.User;
 import com.zyf.androidlearn.utils.BitmapUtils;
 import com.zyf.androidlearn.utils.CameraUtils;
 import com.zyf.androidlearn.utils.SPUtils;
@@ -34,7 +35,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.zyf.androidlearn.MainActivity.LoginUser;
+
 public class viewpager extends AppCompatActivity {
+    private  TextView XingMing;
+    private  TextView bawei;
+    private MySQLiteOpenHelper mySQLiteOpenHelper;
+
     //权限请求
     private RxPermissions rxPermissions;
 
@@ -120,6 +127,20 @@ public class viewpager extends AppCompatActivity {
         ViewPager viewPager=findViewById(R.id.vp);   //定位到activity_viewpager
 
         viewPager.setAdapter(myAdapter);
+
+
+        //**********************************************显示登录内容*****************************************************************
+        XingMing=findViewById(R.id.textView4);
+        bawei=findViewById(R.id.textView5);
+
+        mySQLiteOpenHelper=new MySQLiteOpenHelper(this);
+
+        List<User> users=mySQLiteOpenHelper.queryFromDbByCardId2(LoginUser);
+        String result="";
+        for (User user : users) {
+             result=user.getCardId();
+        }
+        bawei.setText(result);
     }
 
 
