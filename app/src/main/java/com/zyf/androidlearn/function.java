@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import static com.zyf.androidlearn.MainActivity.LoginUser;
-
 public class function extends AppCompatActivity {
 
     @Override

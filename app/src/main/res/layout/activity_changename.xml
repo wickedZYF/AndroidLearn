@@ -42,6 +42,8 @@
         android:textColor="@color/white"
         android:background="@drawable/shape"
         android:text="Change"
+        android:onClick="change"
+        tools:ignore="OnClick"
         />
 
 </LinearLayout>

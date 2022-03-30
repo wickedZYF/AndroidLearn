@@ -140,7 +140,7 @@ public class viewpager extends AppCompatActivity {
         for (User user : users) {
              result=user.getCardId();
         }
-        bawei.setText(result);
+//        bawei.setText(result);
     }
 
 
