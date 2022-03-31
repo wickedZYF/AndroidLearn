@@ -15,6 +15,8 @@ import java.sql.SQLDataException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.zyf.androidlearn.MainActivity.LoginUser;
+
 public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME ="mySQLite.db";
@@ -113,8 +115,30 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         return userList;
     }
 
-    public  void updateDataName(User user){
+    /**
+     * 修改姓名
+     * @param user
+     * @return
+     */
+    public  int updateDataName(User user){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put("name",user.getName());
 
+        return db.update(TABLE_NAME_USER,values,"name like ?",new String[]{LoginUser});
+    }
+
+    /**
+     * 修改密码
+     * @param user
+     * @return
+     */
+    public  int updateDataPassword(User user){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put("password",user.getPwd());
+
+        return db.update(TABLE_NAME_USER,values,"name like ?",new String[]{LoginUser});
     }
 
 }

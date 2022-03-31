@@ -78,6 +78,8 @@ public class viewpager extends AppCompatActivity {
         setContentView(R.layout.activity_viewpager);
 
 
+
+
         ivHead = findViewById(R.id.iv_head);
         //检查版本
         checkVersion();
@@ -99,27 +101,63 @@ public class viewpager extends AppCompatActivity {
         View view2=lf.inflate(R.layout.activity_function,null);     //放入viewpager
         viewList.add(view1);
         viewList.add(view2);
+
+
+
         //找到button这个view
         Button button1= view2.findViewById(R.id.button2);
-//设置点击事件
+        //设置点击事件
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.v("mytag","click");
-                //跳转到changepassword
+                //跳转到changename
                   Intent intent=new Intent(viewpager.this,changename.class);
                   startActivity(intent);
             }
         });
+
+
         //找到button这个view
         Button button2= view2.findViewById(R.id.button3);
-//设置点击事件
+        //设置点击事件
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.v("mytag","click");
                 //跳转到changepassword
                 Intent intent=new Intent(viewpager.this,changepassword.class);
+                startActivity(intent);
+            }
+        });
+
+        //找到button这个view
+        Button button3= view2.findViewById(R.id.tuichu);
+        //设置点击事件
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.v("mytag","click");
+                //跳转到MainActivity
+                Intent intent = new Intent();
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); //登录后返回键失效
+
+                intent.setClass(viewpager.this, MainActivity.class);
+
+                startActivity(intent);
+            }
+        });
+
+        //找到button这个view
+        Button button4= view2.findViewById(R.id.button5);
+        //设置点击事件
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.v("mytag","click");
+                //跳转到Shangchuan
+                Intent intent=new Intent(viewpager.this,Shangchuan.class);
                 startActivity(intent);
             }
         });
