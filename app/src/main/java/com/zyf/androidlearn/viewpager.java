@@ -156,7 +156,7 @@ public class viewpager extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.v("mytag","click");
-                //跳转到Shangchuan
+                //跳转到Shangchuan  结束
                 Intent intent=new Intent(viewpager.this,Shangchuan.class);
                 startActivity(intent);
             }
