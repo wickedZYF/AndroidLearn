@@ -1,4 +1,4 @@
-package com.zyf.androidlearn;
+package com.zyf.androidlearn.SQLite;
 
 import android.content.ContentValues;
 import android.content.Context;

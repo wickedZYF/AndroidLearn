@@ -24,7 +24,10 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.zyf.androidlearn.Adapter.MyAdapter;
 import com.zyf.androidlearn.Bean.User;
+import com.zyf.androidlearn.List_item.Mycangku;
+import com.zyf.androidlearn.SQLite.MySQLiteOpenHelper;
 import com.zyf.androidlearn.utils.BitmapUtils;
 import com.zyf.androidlearn.utils.CameraUtils;
 import com.zyf.androidlearn.utils.SPUtils;
@@ -150,17 +153,18 @@ public class viewpager extends AppCompatActivity {
         });
 
         //找到button这个view
-        Button button4= view2.findViewById(R.id.button5);
+        Button button4= view2.findViewById(R.id.button6);
         //设置点击事件
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.v("mytag","click");
-                //跳转到Shangchuan  结束
-                Intent intent=new Intent(viewpager.this,Shangchuan.class);
+                //跳转到changepassword
+                Intent intent=new Intent(viewpager.this, Mycangku.class);
                 startActivity(intent);
             }
         });
+
 
         ViewPager viewPager=findViewById(R.id.vp);   //定位到activity_viewpager
 

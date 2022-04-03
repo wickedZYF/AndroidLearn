@@ -3,14 +3,13 @@ package com.zyf.androidlearn;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.zyf.androidlearn.Bean.User;
+import com.zyf.androidlearn.SQLite.MySQLiteOpenHelper;
 
 public class changepassword extends AppCompatActivity {
     private EditText newuserName;

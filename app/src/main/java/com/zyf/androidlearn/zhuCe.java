@@ -3,15 +3,13 @@ package com.zyf.androidlearn;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.zyf.androidlearn.Bean.User;
+import com.zyf.androidlearn.SQLite.MySQLiteOpenHelper;
 
 import java.util.Random;
 

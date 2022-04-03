@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoTitle">
-        <activity android:name=".Shangchuan"></activity>
+        <activity android:name=".List_item.AddActivity"></activity>
+        <activity android:name=".List_item.Mycangku" />
         <activity android:name=".viewpager" />
         <activity android:name=".changepassword" />
         <activity android:name=".changename" />
