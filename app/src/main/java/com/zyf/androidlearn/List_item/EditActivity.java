@@ -1,38 +1,32 @@
-
 package com.zyf.androidlearn.List_item;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.zyf.androidlearn.Adapter.MyAdapter2;
 import com.zyf.androidlearn.Bean.Note;
 import com.zyf.androidlearn.R;
 import com.zyf.androidlearn.SQLite.NoteDbOpenHelper;
 import com.zyf.androidlearn.utils.ToastUtil;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-public class AddActivity extends AppCompatActivity {
+public class EditActivity extends AppCompatActivity {
 
+    private Note note;
     private EditText etTitle,etContent;
     private NoteDbOpenHelper mNoteDbOpenHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        setContentView(R.layout.activity_edit);
 
         //隐藏ActionBar
         getSupportActionBar().hide();
@@ -40,15 +34,24 @@ public class AddActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
-
         etTitle = findViewById(R.id.et_title);
         etContent = findViewById(R.id.et_content);
-        mNoteDbOpenHelper = new NoteDbOpenHelper(this);
+
+        initData();
 
     }
 
+    private void initData() {
+        Intent intent = getIntent();
+        note = (Note) intent.getSerializableExtra("note");
+        if (note != null) {
+            etTitle.setText(note.getTitle());
+            etContent.setText(note.getContent());
+        }
+        mNoteDbOpenHelper = new NoteDbOpenHelper(this);
+    }
 
-    public void add2(View view) {
+    public void save(View view) {
         String title = etTitle.getText().toString();
         String content = etContent.getText().toString();
         if (TextUtils.isEmpty(title)) {
@@ -56,25 +59,21 @@ public class AddActivity extends AppCompatActivity {
             return;
         }
 
-        Note note = new Note();
-
         note.setTitle(title);
         note.setContent(content);
         note.setCreatedTime(getCurrentTimeFormat());
-        //添加一行数据库的信息
-        long row = mNoteDbOpenHelper.insertData(note);
-        if (row != -1) {
-            ToastUtil.toastShort(this,"添加成功！");
+        long rowId = mNoteDbOpenHelper.updateData(note);  //调用更新数据库的功能
+        if (rowId != -1) {
+            ToastUtil.toastShort(this, "修改成功！");
             this.finish();
-        }else {
-            ToastUtil.toastShort(this,"添加失败！");
+        }else{
+            ToastUtil.toastShort(this, "修改失败！");
         }
-
     }
-    //定义时间格式，调用↑
+
     private String getCurrentTimeFormat() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY年MM月dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY年MM月dd日 HH:mm:ss");
         Date date = new Date();
-        return simpleDateFormat.format(date);
+        return sdf.format(date);
     }
 }

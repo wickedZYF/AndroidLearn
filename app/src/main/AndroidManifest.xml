@@ -15,9 +15,10 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/NoTitle">
-        <activity android:name=".List_item.AddActivity"></activity>
-        <activity android:name=".List_item.Mycangku" />
+        android:theme="@style/Theme.AndroidLearn">
+        <activity android:name=".List_item.EditActivity"></activity>
+        <activity android:name=".List_item.AddActivity" />
+        <activity android:name=".List_item.Mycangku" android:label="我的仓库"/>
         <activity android:name=".viewpager" />
         <activity android:name=".changepassword" />
         <activity android:name=".changename" />

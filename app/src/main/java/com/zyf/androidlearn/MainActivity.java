@@ -1,11 +1,19 @@
 package com.zyf.androidlearn;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -28,6 +36,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //隐藏ActionBar
+        getSupportActionBar().hide();
+        //设置页面全屏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         mySQLiteOpenHelper =new MySQLiteOpenHelper(this);
 
 //        TextView tv_one=findViewById(R.id.tv_one);
@@ -45,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 
 
     public void login(View v){

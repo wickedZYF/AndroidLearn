@@ -19,7 +19,7 @@ public class User {
 
     public User(String name, String pwd1, String cardId) {
         this.name = name;
-        this.pwd = pwd;
+        this.pwd = pwd1;
         this.cardId = cardId;
     }
 
