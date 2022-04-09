@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private MySQLiteOpenHelper mySQLiteOpenHelper;
-//定义一个静态的Uesr记住当前登录成功的用户对象
+//定义一个LoginUser记住当前登录成功的用户对象
     public static String LoginUser;
 
     public MainActivity() {

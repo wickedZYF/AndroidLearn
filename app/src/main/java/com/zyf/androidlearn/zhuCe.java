@@ -2,6 +2,7 @@ package com.zyf.androidlearn;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -75,6 +76,11 @@ public class zhuCe extends AppCompatActivity {
                         long rowId =mySQLiteOpenHelper.insertData(user);
                         if (rowId!=-1){
                             Toast.makeText(this,"注册成功",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent();
+
+                            intent.setClass(zhuCe.this, MainActivity.class);
+
+                            startActivity(intent);
                         }else {
                             Toast.makeText(this,"注册失败",Toast.LENGTH_SHORT).show();
                         }
@@ -95,19 +101,22 @@ public class zhuCe extends AppCompatActivity {
      * @return
      */
     private String createCardId() {
-//        while (true) {
-            String cardId="";
+        String cardId="";
+        while (true) {
             Random r =new Random();
             for (int i = 0; i < 8; i++) {
                 cardId +=r.nextInt(10);
             }
                                                          //筛出来的的8位uid
-//            Cursor c=mySQLiteOpenHelper.queryFromDbByCardId(cardId);
-//            if(c==null){
-//                return cardId;
-//            }
-        return cardId;
+            Cursor c=mySQLiteOpenHelper.queryFromDbByCardId(cardId);
+            if(c.moveToFirst()==false){
+                c.close();
+                break;
+            }
+            c.close();
         }
+        return cardId;
+    }
     }
 
 
