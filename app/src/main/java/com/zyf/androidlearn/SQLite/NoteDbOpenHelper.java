@@ -15,7 +15,7 @@ public class NoteDbOpenHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "noteSQLite.db";
     private static final String TABLE_NAME_NOTE = "note";
                                                                                         //id           主键  自增
-    private static final String CREATE_TABLE_SQL = "create table " + TABLE_NAME_NOTE + " (id integer primary key autoincrement, title text, content text, create_time text)";
+    private static final String CREATE_TABLE_SQL = "create table " + TABLE_NAME_NOTE + " (id integer primary key autoincrement, title text, content text, create_time text,username text)";
 
 
     public NoteDbOpenHelper(Context context) {
@@ -44,6 +44,7 @@ public class NoteDbOpenHelper extends SQLiteOpenHelper {
         values.put("title", note.getTitle());
         values.put("content", note.getContent());
         values.put("create_time", note.getCreatedTime());
+        values.put("username", note.getName());
 
         return db.insert(TABLE_NAME_NOTE, null, values);
     }
@@ -63,6 +64,8 @@ public class NoteDbOpenHelper extends SQLiteOpenHelper {
         values.put("title", note.getTitle());
         values.put("content", note.getContent());
         values.put("create_time", note.getCreatedTime());
+        values.put("username", note.getName());
+
 
         return db.update(TABLE_NAME_NOTE, values, "id like ?", new String[]{note.getId()});
     }

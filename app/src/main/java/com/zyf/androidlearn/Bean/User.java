@@ -6,6 +6,7 @@ public class User {
     private String pwd;
     private String cardId;
 
+
     public String getCardId() {
         return cardId;
     }

@@ -17,6 +17,8 @@ import com.zyf.androidlearn.utils.ToastUtil;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.zyf.androidlearn.MainActivity.LoginUser;
+
 public class EditActivity extends AppCompatActivity {
 
     private Note note;
@@ -54,6 +56,7 @@ public class EditActivity extends AppCompatActivity {
     public void save(View view) {
         String title = etTitle.getText().toString();
         String content = etContent.getText().toString();
+        String name=LoginUser;
         if (TextUtils.isEmpty(title)) {
             ToastUtil.toastShort(this, "标题不能为空！");
             return;
@@ -62,6 +65,8 @@ public class EditActivity extends AppCompatActivity {
         note.setTitle(title);
         note.setContent(content);
         note.setCreatedTime(getCurrentTimeFormat());
+        note.setName(name);
+
         long rowId = mNoteDbOpenHelper.updateData(note);  //调用更新数据库的功能
         if (rowId != -1) {
             ToastUtil.toastShort(this, "修改成功！");

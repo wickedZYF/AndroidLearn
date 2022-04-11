@@ -184,7 +184,8 @@ public class viewpager extends AppCompatActivity {
 
         mySQLiteOpenHelper=new MySQLiteOpenHelper(this);
 
-        List<User> users=mySQLiteOpenHelper.queryFromDbByCardId2(LoginUser);
+        String name=LoginUser;
+        List<User> users=mySQLiteOpenHelper.queryFromDbByCardId2(name);
         String result="";
         for (User user : users) {
              result=user.getCardId();

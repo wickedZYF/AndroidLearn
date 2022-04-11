@@ -31,8 +31,8 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_SQL);
-
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -94,7 +94,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * 显示登录用户对应数据库uid
+     * 显示登录用户对应uid
      */
     public List<User> queryFromDbByCardId2(String name){
         SQLiteDatabase db=getWritableDatabase();

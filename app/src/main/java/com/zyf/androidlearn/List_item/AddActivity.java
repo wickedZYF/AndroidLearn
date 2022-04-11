@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.zyf.androidlearn.MainActivity.LoginUser;
+
 public class AddActivity extends AppCompatActivity {
 
     private EditText etTitle,etContent;
@@ -51,6 +53,7 @@ public class AddActivity extends AppCompatActivity {
     public void add2(View view) {
         String title = etTitle.getText().toString();
         String content = etContent.getText().toString();
+        String name=LoginUser;
         if (TextUtils.isEmpty(title)) {
             ToastUtil.toastShort(this, "标题不能为空！");
             return;
@@ -61,6 +64,8 @@ public class AddActivity extends AppCompatActivity {
         note.setTitle(title);
         note.setContent(content);
         note.setCreatedTime(getCurrentTimeFormat());
+        note.setName(name);
+
         //添加一行数据库的信息
         long row = mNoteDbOpenHelper.insertData(note);
         if (row != -1) {

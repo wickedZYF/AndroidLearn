@@ -7,10 +7,13 @@ public class Note implements Serializable {
     private String content;
     private String createdTime;
     private String id;
+    private String name;
 
-    public String getTitle() {
-        return title;
-    }
+    public String getName() { return name; }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getTitle() { return title; }
 
     public void setTitle(String title) {
         this.title = title;
@@ -47,6 +50,7 @@ public class Note implements Serializable {
                 ", content='" + content + '\'' +
                 ", createdTime='" + createdTime + '\'' +
                 ", id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }
