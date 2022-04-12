@@ -10,6 +10,8 @@ import com.zyf.androidlearn.Bean.Note;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.zyf.androidlearn.MainActivity.LoginUser;
+
 public class NoteDbOpenHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "noteSQLite.db";
@@ -70,6 +72,34 @@ public class NoteDbOpenHelper extends SQLiteOpenHelper {
         return db.update(TABLE_NAME_NOTE, values, "id like ?", new String[]{note.getId()});
     }
 
+    //数据库中提取相应用户数据方法
+    public List<Note> queryUserFromDb(String name) {
+
+        SQLiteDatabase db = getWritableDatabase();
+        List<Note> noteList = new ArrayList<>();
+
+        Cursor cursor = db.query(TABLE_NAME_NOTE,null,"username like?",new String[]{name},null, null, null);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(cursor.getColumnIndex("id"));
+                String title = cursor.getString(cursor.getColumnIndex("title"));
+                String content = cursor.getString(cursor.getColumnIndex("content"));
+                String createTime = cursor.getString(cursor.getColumnIndex("create_time"));
+
+                Note note = new Note();
+                note.setId(id);
+                note.setTitle(title);
+                note.setContent(content);
+                note.setCreatedTime(createTime);
+
+                noteList.add(note);
+            }
+            cursor.close();
+        }
+
+        return noteList;
+
+    }
     //数据库中提取数据方法
     public List<Note> queryAllFromDb() {
 
@@ -98,6 +128,37 @@ public class NoteDbOpenHelper extends SQLiteOpenHelper {
         return noteList;
 
     }
+    public List<Note> queryFromDbByTitle2(String title) {
+        if (TextUtils.isEmpty(title)) {
+            String name=LoginUser;
+            return queryUserFromDb(name);
+        }
+
+        SQLiteDatabase db = getWritableDatabase();
+        List<Note> noteList = new ArrayList<>();
+        //模糊匹配查询
+        Cursor cursor = db.query(TABLE_NAME_NOTE, null, "title like ?", new String[]{"%"+title+"%"}, null, null, null);
+
+        if (cursor != null) {
+
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(cursor.getColumnIndex("id"));
+                String title2 = cursor.getString(cursor.getColumnIndex("title"));
+                String content = cursor.getString(cursor.getColumnIndex("content"));
+                String createTime = cursor.getString(cursor.getColumnIndex("create_time"));
+
+                Note note = new Note();
+                note.setId(id);
+                note.setTitle(title2);
+                note.setContent(content);
+                note.setCreatedTime(createTime);
+                noteList.add(note);
+            }
+            cursor.close();
+        }
+        return noteList;
+    }
+
 
     public List<Note> queryFromDbByTitle(String title) {
         if (TextUtils.isEmpty(title)) {

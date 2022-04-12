@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.zyf.androidlearn.MainActivity.LoginUser;
+
 public class Mycangku extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private FloatingActionButton mBtnAdd;
@@ -106,7 +108,8 @@ public class Mycangku extends AppCompatActivity {
     }
 //从数据库中获取数据
     private List<Note> getDataFromDB() {
-        return mNoteDbOpenHelper.queryAllFromDb();
+        String name=LoginUser;
+        return mNoteDbOpenHelper.queryUserFromDb(name);
     }
 
     //日期
@@ -144,7 +147,7 @@ public class Mycangku extends AppCompatActivity {
 
             @Override//每当输入文本改变，更新
             public boolean onQueryTextChange(String newText) {
-                mNotes = mNoteDbOpenHelper.queryFromDbByTitle(newText);  //调用数据库模糊查询进行查询
+                mNotes = mNoteDbOpenHelper.queryFromDbByTitle2(newText);  //调用数据库模糊查询进行查询
                 mMyAdapter.refreshData(mNotes);
                 return true;
             }
