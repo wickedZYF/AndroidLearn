@@ -19,7 +19,7 @@
         <activity android:name=".List_item.EditActivity"></activity>
         <activity android:name=".List_item.AddActivity" />
         <activity android:name=".List_item.Mycangku" android:label="我的仓库"/>
-        <activity android:name=".viewpager" />
+        <activity android:name=".viewpager" android:label="资源分享"/>
         <activity android:name=".changepassword" />
         <activity android:name=".changename" />
         <activity android:name=".function" />
