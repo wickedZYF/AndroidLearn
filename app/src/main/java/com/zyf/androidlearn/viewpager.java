@@ -118,14 +118,7 @@ public class viewpager extends AppCompatActivity {
 
 
 
-        ivHead = findViewById(R.id.iv_head);
-        //检查版本
-        checkVersion();
-        //取出缓存
-        String imageUrl = SPUtils.getString("imageUrl",null,this);
-        if(imageUrl != null){
-            Glide.with(this).load(imageUrl).apply(requestOptions).into(ivHead);
-        }
+
 
 
 
@@ -203,6 +196,17 @@ public class viewpager extends AppCompatActivity {
         ViewPager viewPager=findViewById(R.id.vp);   //定位到activity_viewpager
 
         viewPager.setAdapter(myAdapter);
+
+
+
+        ivHead =view2.findViewById(R.id.iv_head);
+        //检查版本
+        checkVersion();
+        //取出缓存
+        String imageUrl = SPUtils.getString("imageUrl",null,this);
+        if(imageUrl != null){
+            Glide.with(this).load(imageUrl).apply(requestOptions).into(ivHead);
+        }
 
 
         //**********************************************显示登录内容*****************************************************************
