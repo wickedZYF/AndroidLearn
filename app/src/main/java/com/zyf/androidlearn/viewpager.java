@@ -36,6 +36,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zyf.androidlearn.Adapter.MyAdapter;
 import com.zyf.androidlearn.Adapter.MyAdapter2;
+import com.zyf.androidlearn.Adapter.MyAdapter3;
 import com.zyf.androidlearn.Bean.Note;
 import com.zyf.androidlearn.Bean.User;
 import com.zyf.androidlearn.List_item.AddActivity;
@@ -94,7 +95,7 @@ public class viewpager extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private FloatingActionButton mBtnAdd;
     private List<Note> mNotes;
-    private MyAdapter2 mMyAdapter;
+    private MyAdapter3 mMyAdapter;
 
     private NoteDbOpenHelper mNoteDbOpenHelper;
     public static final int MODE_LINEAR = 0;
@@ -252,13 +253,13 @@ public class viewpager extends AppCompatActivity {
 
     private void refreshDataFromDb() {
         mNotes = getDataFromDB();
-        //告诉我们的适配器MyAdapter2进行刷新
-        //调用MyAdapter2中的refreshData方法把新数据传进去
+        //告诉我们的适配器MyAdapter3进行刷新
+        //调用MyAdapter3中的refreshData方法把新数据传进去
         mMyAdapter.refreshData(mNotes);
     }
 
     private void initEvent() {
-        mMyAdapter=new MyAdapter2(this,mNotes);
+        mMyAdapter=new MyAdapter3(this,mNotes);
 
         mRecyclerView.setAdapter(mMyAdapter);
 
@@ -352,7 +353,7 @@ public class viewpager extends AppCompatActivity {
     private void setToLinearList() {
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mMyAdapter.setViewType(MyAdapter2.TYPE_LINEAR_LAYOUT);//设置线性布局
+        mMyAdapter.setViewType(MyAdapter3.TYPE_LINEAR_LAYOUT);//设置线性布局
         mMyAdapter.notifyDataSetChanged();
     }
 
@@ -360,7 +361,7 @@ public class viewpager extends AppCompatActivity {
     private void setToGridList() {
         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(gridLayoutManager);
-        mMyAdapter.setViewType(MyAdapter2.TYPE_GRID_LAYOUT);//设置网格布局
+        mMyAdapter.setViewType(MyAdapter3.TYPE_GRID_LAYOUT);//设置网格布局
         mMyAdapter.notifyDataSetChanged();
     }
 

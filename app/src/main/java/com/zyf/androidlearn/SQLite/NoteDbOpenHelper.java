@@ -113,12 +113,14 @@ public class NoteDbOpenHelper extends SQLiteOpenHelper {
                 String title = cursor.getString(cursor.getColumnIndex("title"));
                 String content = cursor.getString(cursor.getColumnIndex("content"));
                 String createTime = cursor.getString(cursor.getColumnIndex("create_time"));
+                String name = cursor.getString(cursor.getColumnIndex("username"));
 
                 Note note = new Note();
                 note.setId(id);
                 note.setTitle(title);
                 note.setContent(content);
                 note.setCreatedTime(createTime);
+                note.setName(name);
 
                 noteList.add(note);
             }
