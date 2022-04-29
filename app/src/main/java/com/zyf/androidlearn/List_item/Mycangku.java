@@ -7,13 +7,26 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 import com.zyf.androidlearn.Adapter.MyAdapter2;
 import com.zyf.androidlearn.Bean.Note;
 import com.zyf.androidlearn.MainActivity;
@@ -22,6 +35,8 @@ import com.zyf.androidlearn.SQLite.NoteDbOpenHelper;
 import com.zyf.androidlearn.utils.SpfUtil;
 import com.zyf.androidlearn.viewpager;
 
+import java.io.IOException;
+import java.sql.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,7 +47,7 @@ import static com.zyf.androidlearn.MainActivity.LoginUser;
 public class Mycangku extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private FloatingActionButton mBtnAdd;
-    private List<Note> mNotes;
+    public static List<Note> mNotes;
     private MyAdapter2 mMyAdapter;
 
     private NoteDbOpenHelper mNoteDbOpenHelper;
@@ -107,10 +122,75 @@ public class Mycangku extends AppCompatActivity {
 
     }
 //从数据库中获取数据
-    private List<Note> getDataFromDB() {
+    public List<Note> getDataFromDB() {
         String name=LoginUser;
-        return mNoteDbOpenHelper.queryUserFromDb(name);
+        List<Note> notes=new ArrayList<>();
+
+        //3. 发起http请求
+        OkHttpClient okHttpClient = new OkHttpClient();     //创建OkHttpClient实例
+
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        RequestBody requestBody = builder.add("name", name)
+                .build();                                          //需要传输的数据存入requestBody
+
+        Request request = new Request.Builder()
+                .url("http://192.168.0.105:8080/getUser")                     //需要的url
+                .post(requestBody)
+                .build();
+        Call call = okHttpClient.newCall(request);
+
+        call.enqueue(new Callback() {                 //开启异步进程
+            @Override
+            public void onFailure(Request request, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //连接超时时的提醒
+                        Toast.makeText(Mycangku.this,"Fail",Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                //成功获取响应时
+                //不要toString
+                String responseData = response.body().string();
+                //解析，responseData，获取响应数据
+                 List<Note> noteList = JSON.parseObject(responseData,List.class);      //将所接受的json数据转换成boolean对象
+
+                System.out.println(noteList);
+
+                SharedPreferences sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+                //步骤2： 实例化SharedPreferences.Editor对象
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                //步骤3：将获取过来的值放入文件
+                Gson gson = new Gson();
+                String str = gson.toJson(noteList);
+                editor.putString("key_data",str);
+                //步骤4：提交
+                editor.commit();
+
+            }
+        });
+
+        SharedPreferences sharedPreferences= getSharedPreferences("data", Context .MODE_PRIVATE);
+        String listJson=sharedPreferences.getString("key_data","");
+        if (!listJson.equals("")) {
+            Gson gson = new Gson();
+            notes = gson.fromJson(listJson, new TypeToken <List<Note>>() {
+            }.getType());
+
+        }
+        System.out.println(notes);
+        return notes;
+//        return mNoteDbOpenHelper.queryUserFromDb(name);
+
+
     }
+
+
+
 
     //日期
     private String getCurrentTimeFormat(){
@@ -129,6 +209,7 @@ public class Mycangku extends AppCompatActivity {
         Intent intent = new Intent();
 
         intent.setClass(Mycangku.this, AddActivity.class);
+//        Mycangku.this.finish();
 
         startActivity(intent);
     }

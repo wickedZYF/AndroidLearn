@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Note implements Serializable {
     private String title;
     private String content;
-    private String createdTime;
+    private String createTime;
     private String id;
     private String name;
 
@@ -27,12 +27,12 @@ public class Note implements Serializable {
         this.content = content;
     }
 
-    public String getCreatedTime() {
-        return createdTime;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatedTime(String createdTime) {
-        this.createdTime = createdTime;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     public String getId() {
@@ -48,7 +48,7 @@ public class Note implements Serializable {
         return "Note{" +
                 "title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", createdTime='" + createdTime + '\'' +
+                ", createdTime='" + createTime + '\'' +
                 ", id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 '}';

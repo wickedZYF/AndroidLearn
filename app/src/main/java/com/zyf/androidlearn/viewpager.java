@@ -214,17 +214,14 @@ public class viewpager extends AppCompatActivity {
         XingMing=view2.findViewById(R.id.textView4);
         bawei=view2.findViewById(R.id.textView5);
 
-        XingMing.setText(LoginUser);
 
-        mySQLiteOpenHelper=new MySQLiteOpenHelper(this);
+        //获取数据
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        String uid = intent.getStringExtra("cardId");
 
-        String name=LoginUser;
-        List<User> users=mySQLiteOpenHelper.queryFromDbByCardId2(name);
-        String result="";
-        for (User user : users) {
-             result=user.getCardId();
-        }
-        bawei.setText("id:"+result);
+        XingMing.setText(name);
+        bawei.setText("id:"+uid);
 
 
 

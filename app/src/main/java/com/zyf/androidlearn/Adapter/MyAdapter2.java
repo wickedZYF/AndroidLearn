@@ -3,20 +3,36 @@ package com.zyf.androidlearn.Adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 import com.zyf.androidlearn.Bean.Note;
+import com.zyf.androidlearn.List_item.AddActivity;
 import com.zyf.androidlearn.List_item.EditActivity;
+import com.zyf.androidlearn.List_item.Mycangku;
 import com.zyf.androidlearn.R;
 import com.zyf.androidlearn.SQLite.NoteDbOpenHelper;
+import com.zyf.androidlearn.utils.NetStateUtil;
 import com.zyf.androidlearn.utils.ToastUtil;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MyAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -84,7 +100,7 @@ public class MyAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         Note note = mBeanList.get(position);
         holder.mTvTitle.setText(note.getTitle());
         holder.mTvContent.setText(note.getContent());
-        holder.mTvTime.setText(note.getCreatedTime());
+        holder.mTvTime.setText(note.getCreateTime());
         holder.rlContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,7 +152,7 @@ public class MyAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         Note note = mBeanList.get(position);
         holder.mTvTitle.setText(note.getTitle());
         holder.mTvContent.setText(note.getContent());
-        holder.mTvTime.setText(note.getCreatedTime());
+        holder.mTvTime.setText(note.getCreateTime());
         holder.rlContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,11 +176,40 @@ public class MyAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 tvDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int row = mNoteDbOpenHelper.deleteFromDbById(note.getId());
-                        if (row > 0) {//确定数据库被删除了，再从列表中删除
-                            removeData(position);
-                        }
+
+                        String id=note.getId();
+
+
+                        //3. 发起http请求
+                        OkHttpClient okHttpClient = new OkHttpClient();     //创建OkHttpClient实例
+
+                        FormEncodingBuilder builder = new FormEncodingBuilder();
+                        RequestBody requestBody = builder.add("id",id)
+                                .build();                                          //需要传输的数据存入requestBody
+
+                        Request request = new Request.Builder()
+                                .url("http://192.168.0.105:8080/delete")							 //需要的url
+                                .post(requestBody)                      //注册时需要向服务端上传数据，所以使用post
+                                .build();
+
+                        Call call = okHttpClient.newCall(request);
+                        call.enqueue(new Callback() {						//开启异步进程
+                            @Override
+                            public void onFailure(Request request, IOException e) {
+                            }
+
+                            @Override
+                            public void onResponse(Response response) throws IOException {
+                            }
+                        });
+
+
+                        removeData(position);
                         dialog.dismiss();
+                        //                        int row = mNoteDbOpenHelper.deleteFromDbById(note.getId());
+//                        if (row > 0) {//确定数据库被删除了，再从列表中删除
+//                            removeData(position);
+//                        }
                     }
                 });
 

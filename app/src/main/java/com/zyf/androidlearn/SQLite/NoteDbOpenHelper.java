@@ -45,7 +45,7 @@ public class NoteDbOpenHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("title", note.getTitle());
         values.put("content", note.getContent());
-        values.put("create_time", note.getCreatedTime());
+        values.put("create_time", note.getCreateTime());
         values.put("username", note.getName());
 
         return db.insert(TABLE_NAME_NOTE, null, values);
@@ -65,7 +65,7 @@ public class NoteDbOpenHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("title", note.getTitle());
         values.put("content", note.getContent());
-        values.put("create_time", note.getCreatedTime());
+        values.put("create_time", note.getCreateTime());
         values.put("username", note.getName());
 
 
@@ -90,7 +90,7 @@ public class NoteDbOpenHelper extends SQLiteOpenHelper {
                 note.setId(id);
                 note.setTitle(title);
                 note.setContent(content);
-                note.setCreatedTime(createTime);
+                note.setCreateTime(createTime);
 
                 noteList.add(note);
             }
@@ -119,7 +119,7 @@ public class NoteDbOpenHelper extends SQLiteOpenHelper {
                 note.setId(id);
                 note.setTitle(title);
                 note.setContent(content);
-                note.setCreatedTime(createTime);
+                note.setCreateTime(createTime);
                 note.setName(name);
 
                 noteList.add(note);
@@ -153,7 +153,7 @@ public class NoteDbOpenHelper extends SQLiteOpenHelper {
                 note.setId(id);
                 note.setTitle(title2);
                 note.setContent(content);
-                note.setCreatedTime(createTime);
+                note.setCreateTime(createTime);
                 noteList.add(note);
             }
             cursor.close();
@@ -184,7 +184,7 @@ public class NoteDbOpenHelper extends SQLiteOpenHelper {
                 note.setId(id);
                 note.setTitle(title2);
                 note.setContent(content);
-                note.setCreatedTime(createTime);
+                note.setCreateTime(createTime);
                 noteList.add(note);
             }
             cursor.close();

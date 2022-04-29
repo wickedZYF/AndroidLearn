@@ -85,7 +85,7 @@ public class MyAdapter3 extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         Note note = mBeanList.get(position);
         holder.mTvTitle.setText(note.getTitle());
         holder.mTvContent.setText(note.getContent());
-        holder.mTvTime.setText(note.getCreatedTime());
+        holder.mTvTime.setText(note.getCreateTime());
         holder.rlContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,7 +137,7 @@ public class MyAdapter3 extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         Note note = mBeanList.get(position);
         holder.mTvTitle.setText(note.getTitle());
         holder.mTvContent.setText(note.getContent());
-        holder.mTvTime.setText(note.getCreatedTime());
+        holder.mTvTime.setText(note.getCreateTime());
         holder.rlContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

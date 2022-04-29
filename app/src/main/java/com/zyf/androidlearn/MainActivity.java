@@ -19,7 +19,19 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+import com.zyf.androidlearn.Bean.User;
 import com.zyf.androidlearn.SQLite.MySQLiteOpenHelper;
+import com.zyf.androidlearn.utils.NetStateUtil;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -78,51 +90,87 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "姓名密码不能为空", Toast.LENGTH_SHORT).show();
         }else{
 
-            //调用数据库name列，查看是否有重复名称
-            Cursor c1=mySQLiteOpenHelper.queryFromDbByName(name);
-            if(c1!=null && c1.getCount() >= 1){
-                //调用数据库password列，查看是否有重复密码
-                Cursor c2=mySQLiteOpenHelper.queryFromDbByPassword(pwd);
-                if (c2!=null && c2.getCount() >= 1) {
+            //2. 网络为连接则直接返回
+            if(!NetStateUtil.checkNetworkState(MainActivity.this))
+                return;
 
-                    LoginUser =name;
-                    //则出现进度条
-                    proBar.setVisibility(View.VISIBLE);
-                    new Thread() {
+            //3. 发起http请求
+            OkHttpClient okHttpClient = new OkHttpClient();     //创建OkHttpClient实例
+
+            FormEncodingBuilder builder = new FormEncodingBuilder();
+            RequestBody requestBody = builder.add("name", name)
+                    .add("pwd",pwd)
+                    .build();                                          //需要传输的数据存入requestBody
+
+            Request request = new Request.Builder()
+                    .url("http://192.168.0.105:8080/login")							 //需要的url
+                    .post(requestBody)                      //注册时需要向服务端上传数据，所以使用post
+                    .build();
+
+            Call call = okHttpClient.newCall(request);
+            call.enqueue(new Callback() {						//开启异步进程
+                @Override
+                public void onFailure(Request request, IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
                         public void run() {
-                            for (int i = 0; i <= 100; i++) {
-                                proBar.setProgress(i);
-                                try {
-                                    Thread.sleep(8);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-
-                                if (proBar.getProgress() == 100) {
-
-                                    Intent intent = new Intent();
-
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); //登录后返回键失效
-
-                                    intent.setClass(MainActivity.this, viewpager.class);
-
-                                    startActivity(intent);
-
-                                }
-
-                            }
+                            //连接超时时的提醒
+                            Toast.makeText(MainActivity.this,"Fail",Toast.LENGTH_SHORT).show();
                         }
-                    }.start();
-                    c2.close();
-                }else {
-                    Toast.makeText(this, "密码错误", Toast.LENGTH_SHORT).show();
+                    });
                 }
 
+                @Override
+                public void onResponse(Response response) throws IOException {
+                    final String responseData = response.body().string();                         //响应数据
+                    final User user = JSON.parseObject(responseData, User.class);      //将所接受的json数据转换成User对象
 
-                c1.close();
-            }else {
-                Toast.makeText(this, "不存该用户", Toast.LENGTH_SHORT).show();
-            }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //显示回调函数
+                            if(user!=null)      //找到这个user的时候页面跳转
+                            {
+                                LoginUser=name;
+                                //则出现进度条
+                                proBar.setVisibility(View.VISIBLE);
+                                new Thread() {
+                                    public void run() {
+                                        for (int i = 0; i <= 100; i++) {
+                                            proBar.setProgress(i);
+                                            try {
+                                                Thread.sleep(8);
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            if (proBar.getProgress() == 100) {
+
+                                                Intent intent = new Intent();
+
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); //登录后返回键失效
+
+                                                intent.setClass(MainActivity.this, viewpager.class);
+
+                                                intent.putExtra("name",user.getName());
+                                                intent.putExtra("cardId",user.getCardId());
+
+                                                startActivity(intent);
+
+                                            }
+
+                                        }
+                                    }
+                                }.start();
+
+                            }
+                            else                //错误提示
+                                Toast.makeText(MainActivity.this,"账号或密码错误",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+            });
 
 
         }
@@ -130,3 +178,36 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
+//则出现进度条
+//                    proBar.setVisibility(View.VISIBLE);
+//                    new Thread() {
+//                        public void run() {
+//                            for (int i = 0; i <= 100; i++) {
+//                                proBar.setProgress(i);
+//                                try {
+//                                    Thread.sleep(8);
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
+//
+//                                if (proBar.getProgress() == 100) {
+//
+//                                    Intent intent = new Intent();
+//
+//                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); //登录后返回键失效
+//
+//                                    intent.setClass(MainActivity.this, viewpager.class);
+//
+//                                    startActivity(intent);
+//
+//                                }
+//
+//                            }
+//                        }
+//                    }.start();
+
+
+//                                Intent intent = new Intent();
+//                                intent.setClass(MainActivity.this, viewpager.class);
+//                                intent.putExtra("name",user.getName());
+//                                startActivity(intent);
